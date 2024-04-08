@@ -11,8 +11,6 @@ export default function Menu() {
       <MenuButton src={Kakashi} name="Character" alt="chibi kakashi" />
       <MenuButton src={Megumin} name="Character 2" alt="chibbi megumin" />
       <MenuButton src={Bocchi} name="Theme" alt="chibi bocchi" />
-
-      <div>test</div>
     </div>
   );
 }
