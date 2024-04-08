@@ -31,10 +31,10 @@ code {
   font-size: 3em;
 }
 #title > span:first-child {
-  color: #66ac46;
+  color: #729b79;
 }
 #title > span:last-child {
-  color: #cfee9e;
+  color: #bacdb0;
 }
 #menu {
   display: flex;
@@ -49,8 +49,8 @@ code {
   gap: 5em;
   border-radius: 100px;
   padding-left: 5em;
-  background-color: #394032;
-  color: wheat;
+  background-color: #2e2c2f;
+  color: #f3e8ee;
 }
 .menu-button > img {
   align-self: center;
