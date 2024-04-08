@@ -42,11 +42,6 @@ code {
   justify-content: center;
   flex-wrap: wrap;
 }
-.menu-button > img {
-  align-self: center;
-  padding-bottom: 4.2em;
-  height: 13em;
-}
 .menu-button {
   width: 45em;
   height: 8em;
@@ -54,6 +49,13 @@ code {
   gap: 5em;
   border-radius: 100px;
   padding-left: 5em;
+  background-color: #587b7f;
+  color: wheat;
+}
+.menu-button > img {
+  align-self: center;
+  padding-bottom: 4.2em;
+  height: 13em;
 }
 .menu-button > span {
   font-size: 3em;
