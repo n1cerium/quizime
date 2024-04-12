@@ -27,8 +27,9 @@ code {
   flex-direction: column;
   color: wheat;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: 3em;
+  height: 100vh;
 }
 #title > span:first-child {
   color: #729b79;
@@ -36,14 +37,18 @@ code {
 #title > span:last-child {
   color: #bacdb0;
 }
+#title {
+  margin-bottom: 0px;
+}
 #menu {
+  margin-top: 2em;
   display: flex;
   gap: 2em;
   justify-content: center;
   flex-wrap: wrap;
 }
 .menu-button {
-  width: 45em;
+  width: 40em;
   height: 8em;
   display: flex;
   gap: 5em;
@@ -60,4 +65,37 @@ code {
 .menu-button > span {
   font-size: 3em;
   align-self: center;
+}
+
+.anime-box {
+  margin-top: 1em;
+  width: 15em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+#anime-title-hangman {
+  font-size: 0.5em;
+}
+
+#anime-guess-input {
+  height: 1em;
+
+  display: flex;
+}
+
+#anime-guess-input > img {
+  height: 2em;
+}
+#anime-guess-input > input {
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid black;
+  color: #f3e8ee;
+}
+#anime-guess-input > input:focus {
+  background-color: transparent;
+  outline: 0;
 }

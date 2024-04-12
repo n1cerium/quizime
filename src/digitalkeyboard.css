@@ -1,0 +1,18 @@
+#digital-keyboard button {
+  font-size: large;
+  height: 2em;
+  width: 2em;
+  padding: 0;
+}
+
+#digital-keyboard > div {
+  display: flex;
+}
+#digital-keyboard > div:nth-child(1),
+#digital-keyboard > div:nth-child(2) {
+  justify-content: center;
+}
+#digital-keyboard > div:nth-child(3),
+#digital-keyboard > div:nth-child(4) {
+  justify-content: center;
+}
