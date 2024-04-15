@@ -30,6 +30,7 @@ code {
   justify-content: flex-start;
   font-size: 3em;
   height: 100vh;
+  overflow-y: scroll;
 }
 #title > span:first-child {
   color: #729b79;
@@ -39,6 +40,7 @@ code {
 }
 #title {
   margin-bottom: 0px;
+  margin-top: 0.3em;
 }
 #menu {
   margin-top: 2em;
@@ -48,8 +50,8 @@ code {
   flex-wrap: wrap;
 }
 .menu-button {
-  width: 40em;
-  height: 8em;
+  width: 30vw;
+  height: 10vh;
   display: flex;
   gap: 5em;
   border-radius: 100px;
@@ -76,26 +78,143 @@ code {
   gap: 1em;
 }
 
-#anime-title-hangman {
+#anime-guess-type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #729b79;
+  border-radius: 25px;
+  padding: 1em;
+  gap: 0.5em;
+  width: 10em;
+}
+#anime-guess-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#anime-guess-header > h6 {
   font-size: 0.5em;
+  margin: 0;
+}
+.anime-guess-instructions-open {
+  width: 20em;
+  display: block;
+  font-size: 0.5em;
+  animation: open 1s ease-out;
+  height: 8em;
 }
 
-#anime-guess-input {
-  height: 1em;
-
+.anime-guess-instructions-close {
+  width: 20em;
+  font-size: 0.5em;
+  animation: close 1s ease-out;
+  height: 0;
+  display: none;
+}
+.anime-instructions > h6,
+.anime-instructions > p {
+  margin: 0.5em;
+  font-size: 0.8em;
+}
+#anime-title-hangman {
   display: flex;
+  flex-wrap: wrap;
+  font-size: 0.5em;
+  width: 20em;
+}
+#anime-title-hangman > span {
+  display: flex;
+  justify-content: center;
+  width: 0.8em;
+}
+#anime-guess-input {
+  height: 20vh;
+  display: grid;
+  grid-template-areas:
+    "img input button"
+    "img error error";
+  align-items: center;
+  background-color: #729b79;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: 25px;
 }
 
 #anime-guess-input > img {
-  height: 2em;
+  grid-area: img;
+  height: 15vh;
+}
+#anime-guess-input > input,
+#anime-guess-input > button {
+  margin-top: -1em;
+  border: none;
+  font-size: large;
+  background-color: #f3e8ee;
+  border-top: 3px solid #2e2c2f;
+  border-bottom: 3px solid #2e2c2f;
+  height: 7vh;
+  padding: 1em;
 }
 #anime-guess-input > input {
-  border: none;
-  background-color: transparent;
-  border-bottom: 1px solid black;
-  color: #f3e8ee;
+  box-sizing: border-box;
+  grid-area: input;
+  -moz-box-sizing: border-box;
+  color: #2e2c2f;
+  width: 17em;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
 }
 #anime-guess-input > input:focus {
-  background-color: transparent;
+  background-color: #f3e8ee;
   outline: 0;
+}
+#anime-guess-input > button {
+  grid-area: button;
+  border-left: 2px solid #2e2c2f;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  cursor: pointer;
+}
+#anime-guess-input > p {
+  grid-area: error;
+  font-size: 0.6em;
+  justify-self: center;
+  color: rgb(214, 0, 0);
+  margin: 0;
+  margin-top: -2em;
+}
+
+.button-icon {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 0.8em;
+  color: #f3e8ee;
+}
+
+#anime-guess-title-lives {
+  width: 7em;
+  height: 4em;
+}
+
+@keyframes open {
+  from {
+    height: 0;
+    display: none;
+  }
+  to {
+    height: 8em;
+    display: block;
+  }
+}
+@keyframes close {
+  from {
+    height: 8em;
+    display: block;
+  }
+  to {
+    height: 0;
+    display: none;
+  }
 }
