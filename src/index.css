@@ -53,19 +53,21 @@ code {
   width: 30vw;
   height: 10vh;
   display: flex;
-  gap: 5em;
   border-radius: 100px;
   padding-left: 5em;
   background-color: #bacdb0;
+  justify-content: space-evenly;
   color: #2e2c2f;
 }
 .menu-button > img {
   align-self: center;
   padding-bottom: 4.2em;
   height: 13em;
+  margin-left: -8em;
 }
 .menu-button > span {
-  font-size: 3em;
+  font-size: 2em;
+  /*font-size: 3em;*/
   align-self: center;
 }
 
@@ -196,6 +198,47 @@ code {
 #anime-guess-title-lives {
   width: 7em;
   height: 4em;
+}
+
+#anime-guess-character-zoom-effect {
+  overflow: hidden;
+}
+#anime-guess-character-image {
+  width: 5em;
+  height: 7em;
+}
+
+#anime-guess-number {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+#anime-guess-number > p {
+  margin: 0;
+}
+
+#anime-guess-number-condition {
+  width: 4em;
+  height: 3em;
+}
+
+.anime-guess-audio-button {
+  display: flex;
+  gap: 1em;
+}
+.anime-guess-audio-button > button {
+  border-radius: 100px;
+  width: 5em;
+  height: 5em;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.anime-guess-audio-button > button > svg {
+  color: #729b79;
+  height: 3em;
 }
 
 @keyframes open {

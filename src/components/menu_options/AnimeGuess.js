@@ -25,7 +25,11 @@ export default function AnimeGuess({
         <div id="anime-guess-header">
           <h6>
             {guessQuestion}
-            <ButtonIcon icon={faAngleDown} onClick={handleOpenInstruction} />
+            <ButtonIcon
+              className="button-icon"
+              icon={faAngleDown}
+              onClick={handleOpenInstruction}
+            />
           </h6>
           {isRendered && (
             <div

@@ -37,7 +37,6 @@ export default function GuessTitle() {
     BocchiHappy5,
   ];
   const [numberOfGuess, setNumberOfGuess] = useState(6);
-  const [guess, setGuess] = useState("");
 
   useEffect(() => {
     setHiddenTitle(
