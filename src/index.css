@@ -89,14 +89,19 @@ code {
   padding: 1em;
   gap: 0.5em;
   width: 10em;
+  border: 5px solid #475b63;
+}
+#anime-guess-level {
+  margin: 0;
+  font-size: 0.6em;
 }
 #anime-guess-header {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#anime-guess-header > h6 {
-  font-size: 0.5em;
+#anime-guess-header > h5 {
+  font-size: 0.7em;
   margin: 0;
 }
 .anime-guess-instructions-open {
@@ -124,6 +129,7 @@ code {
   flex-wrap: wrap;
   font-size: 0.5em;
   width: 20em;
+  justify-content: center;
 }
 #anime-title-hangman > span {
   display: flex;
@@ -141,6 +147,7 @@ code {
   padding-left: 0.5em;
   padding-right: 0.5em;
   border-radius: 25px;
+  border: 5px solid #475b63;
 }
 
 #anime-guess-input > img {
@@ -238,6 +245,21 @@ code {
 }
 .anime-guess-audio-button > button > svg {
   color: #729b79;
+  height: 3em;
+}
+
+#anime-guess-seiyuu-voices {
+  display: flex;
+  flex-wrap: wrap;
+  width: 9em;
+  gap: 10px;
+  margin: 0;
+}
+#anime-guess-seiyuu-voices > li {
+  list-style: none;
+}
+#anime-guess-seiyuu-voices img {
+  width: 4em;
   height: 3em;
 }
 

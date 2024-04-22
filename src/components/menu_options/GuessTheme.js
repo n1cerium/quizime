@@ -15,6 +15,11 @@ export default function GuessTheme() {
   const [startTime, setStartTime] = useState(0);
   const themeName = "Bokuyaba";
   const audioElement = useRef(null);
+  const instructions =
+    "For every wrong guess, the duration of the audio will be " +
+    "added by a few seconds. You will be given a random anime " +
+    "opening or ending that will start an audio interval of 3 seconds, " +
+    "so Anya wants you to try to guess which anime it is from.";
 
   // function startTimer(duration) {
   //   const interval = setInterval(() => {
@@ -59,6 +64,7 @@ export default function GuessTheme() {
   return (
     <AnimeGuess
       guessQuestion="Guess the Theme"
+      specialInstructions={instructions}
       onCheckCorrectGuess={handleCheckGuessing}
     >
       <div className="anime-guess-audio-button">
