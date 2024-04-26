@@ -611,9 +611,7 @@ export default function GuessTitle() {
   // }, [level]);
 
   useEffect(() => {
-    setAnimeTitle(
-      anime.title_english === null ? anime.title : anime.title_english
-    );
+    setAnimeTitle(anime.title_english || anime.title);
 
     setHiddenTitle(
       animeTitle !== undefined
