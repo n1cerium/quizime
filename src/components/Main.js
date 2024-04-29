@@ -19,9 +19,11 @@ export default function Main() {
     isNumber: false,
     isTheme: false,
     isSeiyuu: false,
+    isDaily: false,
     isMenuOpen: true,
   });
 
+  const [buttonKey, setButtonKey] = useState(null);
   function handleOpeningMenuOption(menuToOpen) {
     setMenuOptions({
       isCharacter: false,
@@ -36,6 +38,19 @@ export default function Main() {
       ...options,
       ...menuToOpen,
     }));
+  }
+
+  function handleSmallMenuButtonClick(val) {
+    const menusToOpen = [
+      { isDaily: true },
+      { isTitle: true },
+      { isCharacter: true },
+      { isNumber: true },
+      { isTheme: true },
+      { isSeiyuu: true },
+    ];
+    setButtonKey(val);
+    handleOpeningMenuOption(menusToOpen[val - 1]);
   }
 
   return (
@@ -73,6 +88,29 @@ export default function Main() {
             alt="chibi natsu"
             onClick={() => handleOpeningMenuOption({ isSeiyuu: true })}
           />
+        </div>
+      )}
+      {!menuOptions.isMenuOpen && (
+        <div id="anime-small-menus">
+          {Array.from({ length: 6 }, (_, i) => i + 1).map((val) => (
+            <button
+              id={
+                buttonKey === val
+                  ? "anime-small-menu-button-border"
+                  : "anime-small-menu-button"
+              }
+              key={val}
+              onClick={() => handleSmallMenuButtonClick(val)}
+            >
+              {val}
+            </button>
+          ))}
+          {/* <button>1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+          <button>5</button>
+          <button>6</button> */}
         </div>
       )}
       {menuOptions.isTitle && <GuessTitle />}

@@ -224,11 +224,12 @@ code {
 
 #anime-guess-number > p {
   margin: 0;
+  font-size: 0.7em;
 }
 
 #anime-guess-number-condition {
-  width: 4em;
-  height: 3em;
+  width: 5em;
+  height: 4em;
 }
 
 .anime-guess-audio-button {
@@ -262,7 +263,33 @@ code {
   width: 4em;
   height: 3em;
 }
+#anime-guess-theme-dancing > img {
+  height: 2em;
+}
 
+#anime-small-menus {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+#anime-small-menu-button-border {
+  border: 4px solid #2e2c2f;
+}
+#anime-small-menu-button {
+  border: none;
+}
+#anime-small-menus > button {
+  width: 2em;
+  height: 2em;
+  border-radius: 100px;
+  font-size: 0.8em;
+  background-color: #729b79;
+  cursor: pointer;
+}
+#anime-small-menus > button:hover {
+  border: 4px solid #2e2c2f;
+}
 @keyframes open {
   from {
     height: 0;

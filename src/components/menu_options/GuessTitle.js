@@ -39,7 +39,7 @@ export default function GuessTitle() {
     BocchiHappy5,
   ];
   const [numberOfGuess, setNumberOfGuess] = useState(6);
-  const [anime, level, setLevel] = useRandomAnime(
+  const [anime, level, setLevel, isLoading, setIsLoading] = useRandomAnime(
     "https://api.jikan.moe/v4/random/anime"
   );
   // const [anime, setAnime] = useState({});
@@ -628,9 +628,10 @@ export default function GuessTitle() {
   useEffect(() => {
     if (hiddenTitle !== "" && hiddenTitle === animeTitle) {
       setLevel((l) => l + 1);
+      setIsLoading(true);
       setNumberOfGuess(6);
     }
-  }, [hiddenTitle, animeTitle, setLevel]);
+  }, [hiddenTitle, animeTitle, setLevel, setIsLoading]);
 
   useEffect(() => {
     if (numberOfGuess === 0) {
@@ -656,13 +657,13 @@ export default function GuessTitle() {
   function handleCheckGuessing(guess) {
     checkForExistingAnime(test);
 
-    if (guess.toLowerCase() === animeTitle.toLowerCase()) {
-      setLevel((l) => l + 1);
-      setNumberOfGuess(6);
-      return "";
-    } else {
+    if (guess.toLowerCase() !== animeTitle.toLowerCase()) {
       setNumberOfGuess((guesses) => guesses - 1);
+      return "";
     }
+    setLevel((l) => l + 1);
+    setIsLoading(true);
+    setNumberOfGuess(6);
   }
 
   function handleGetKeys(key) {

@@ -3,7 +3,6 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import ButtonIcon from "../ButtonIcon";
 import { useState } from "react";
 import { useMountedAnim } from "../../custom-hooks/useMountedAnim";
-import { usePageCount } from "../../custom-hooks/usePageCount";
 export default function AnimeGuess({
   guessQuestion,
   children,

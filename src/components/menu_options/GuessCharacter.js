@@ -1,10 +1,10 @@
 import AnimeGuess from "./AnimeGuess";
-import Frieren from "../../images/frieren.jpg";
 import { useState, useEffect } from "react";
 import { useRandomAnime } from "../../custom-hooks/useRandomAnime";
+
 export default function GuessCharacter() {
-  const [scale, setScale] = useState(4);
-  const [character, level, setLevel] = useRandomAnime(
+  const [filter, setFilter] = useState(10);
+  const [character, level, setLevel, isLoading, setIsLoading] = useRandomAnime(
     "https://api.jikan.moe/v4/random/characters"
   );
   const instruction =
@@ -15,27 +15,50 @@ export default function GuessCharacter() {
     "character might be. Anya is pointing to where to " +
     "enter your guess";
   const characterName = character.name;
-  const x = character.images;
+  const [randomCoordinates, setRandomCoordinates] = useState({
+    x: "50%",
+    y: "50%",
+  });
+  const [randomFilter, setRandomFilter] = useState(0);
+  const filterTypes = [
+    {
+      transform: "scale(" + filter + ")",
+      transformOrigin: `${randomCoordinates.x} ${randomCoordinates.y}`,
+    },
+    { filter: `blur(${filter}px)` },
+  ];
+
+  useEffect(() => {}, [level]);
+  useEffect(() => {
+    setRandomCoordinates({
+      x: `${Math.floor(Math.random() * 100) + 1}%`,
+      y: `${Math.floor(Math.random() * 100) + 1}%`,
+    });
+    setRandomFilter(Math.floor(Math.random() * 2));
+  }, [level]);
   useEffect(() => {
     let imgTemp = character.images?.jpg?.image_url;
+    if (imgTemp === undefined) return;
 
-    if (imgTemp === undefined) {
-      return;
+    let imagesSplit = imgTemp?.split("/");
+    console.log(imagesSplit);
+    if (
+      !isLoading &&
+      imagesSplit[imagesSplit?.length - 1] === "apple-touch-icon-256.png"
+    ) {
+      setIsLoading(true);
     }
+  }, [isLoading, setIsLoading, character]);
 
-    let imagesSplit = imgTemp.split("/");
-
-    if (imagesSplit[imagesSplit.length - 1] === "apple-touch-icon-256.png") {
-      setLevel(level);
-    }
-  }, [character, level, setLevel]);
   function handleCheckGuessing(guess) {
     if (guess.toLowerCase() !== characterName.toLowerCase()) {
-      setScale((s) => (s - 0.1 > 1.0 ? s - 0.1 : 1));
+      setFilter((s) => (s - 0.3 > 1.0 ? s - 0.3 : 1));
       return;
     }
 
     setLevel((l) => l + 1);
+    setFilter(10);
+    setIsLoading(true);
   }
   return (
     <AnimeGuess
@@ -46,11 +69,7 @@ export default function GuessCharacter() {
     >
       <div id="anime-guess-character-zoom-effect">
         <img
-          style={{
-            filter: "brightness(100%)",
-            transform: "scale(" + scale + ")",
-            transformOrigin: "50% 50%",
-          }}
+          style={filterTypes[randomFilter]}
           id="anime-guess-character-image"
           src={character.images?.jpg?.image_url}
           alt={character.name}

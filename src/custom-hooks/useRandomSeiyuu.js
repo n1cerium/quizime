@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 export function useRandomSeiyuu(url) {
   const [seiyuuVoice, setSeiyuuVoice] = useState({});
   const [level, setLevel] = useState(1);
+  const [seiyuuName, setSeiyuuName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    let tempSeiyuu = [];
-
     async function getAnime() {
+      setIsLoading(true);
       const animeRes = await fetch(url);
       const animeData = await animeRes.json();
+
+      setSeiyuuName(animeData.data.name);
 
       const seiyuuRes = await fetch(
         `https://api.jikan.moe/v4/people/${animeData.data?.mal_id}/voices`
@@ -18,34 +20,16 @@ export function useRandomSeiyuu(url) {
 
       const seiyuuData = await seiyuuRes.json();
       setSeiyuuVoice(seiyuuData.data);
+
+      setIsLoading(false);
     }
 
-    setIsLoading(true);
-    do {
-      getAnime();
-      console.log(seiyuuVoice);
-    } while (!seiyuuVoice && seiyuuVoice.length === 0);
-    setIsLoading(false);
-    // //do {
-    // setIsLoading(true);
-    // getAnime();
-    // console.log(tempSeiyuu);
+    //do {
+    if (isLoading) getAnime();
 
-    // async function getVoice() {
-    //   const seiyuuRes = await fetch(
-    //     `https://api.jikan.moe/v4/people/${tempSeiyuu?.mal_id}/voices`
-    //   );
-    //   const seiyuuData = await seiyuuRes.json();
+    console.log("infinite run");
+    //} while (seiyuuVoice.length === 0 || seiyuuVoice.length <= 6);
+  }, [level, url, isLoading]);
 
-    //   setSeiyuuVoice(seiyuuData.data);
-    // }
-
-    // getVoice();
-    // setIsLoading(false);
-
-    // console.log(seiyuuVoice);
-    // //} while (anime.status === "Not yet aired");
-  }, [level, url]);
-
-  return [seiyuuVoice, level, setLevel, isLoading];
+  return [seiyuuVoice, seiyuuName, level, setLevel, isLoading, setIsLoading];
 }
