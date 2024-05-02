@@ -5,13 +5,14 @@ import RyoThumbsup from "../../images/guess_character/RyoThumbsup.png";
 import GintamaShock from "../../images/guess_character/GintamaShock.png";
 import { useEffect, useState } from "react";
 import { useRandomAnime } from "../../custom-hooks/useRandomAnime";
+import Loader from "../Loader";
 
-export default function GuessNumber() {
+export default function GuessNumber({ isRandom, resetRandom }) {
   const [condition, setCondition] = useState({
     src: AyanokojiFace,
     alt: "Neutral",
   });
-  const [anime, level, setLevel, isLoading, setIsLoading] = useRandomAnime(
+  const [anime, isLoading, setIsLoading] = useRandomAnime(
     "https://api.jikan.moe/v4/random/anime"
   );
   const [randomRatingType, setRandomRatingType] = useState(0);
@@ -29,13 +30,12 @@ export default function GuessNumber() {
     "Ryo means you guessed higher, and Gintama Crew shocked means " +
     "you guess lower.";
 
-  console.log(ratingTypes[randomRatingType].value);
   useEffect(() => {
     if (isLoading) {
       return;
     }
     setRandomRatingType(Math.floor(Math.random() * 3));
-  }, [level, isLoading]);
+  }, [isLoading]);
   function handleCheckingGuess(guess) {
     if (isNaN(guess)) return "Hey, give me a number";
 
@@ -60,7 +60,11 @@ export default function GuessNumber() {
       return;
     }
 
-    setLevel((l) => l + 1);
+    if (isRandom) {
+      resetRandom(Math.floor(Math.random() * 6));
+      return;
+    }
+
     setIsLoading(true);
     setCondition({ src: AyanokojiFace, alt: "Neutral" });
   }
@@ -69,20 +73,18 @@ export default function GuessNumber() {
       guessQuestion="Guess the Number"
       specialInstructions={instruction}
       onCheckCorrectGuess={handleCheckingGuess}
-      level={level}
+      isDataLoading={isLoading}
     >
-      {!isLoading && (
-        <div id="anime-guess-number">
-          <p>
-            {animeName} ({ratingTypes[randomRatingType].type})
-          </p>
-          <img
-            id="anime-guess-number-condition"
-            src={condition.src}
-            alt={condition.alt}
-          />
-        </div>
-      )}
+      <div id="anime-guess-number">
+        <p>
+          {animeName} ({ratingTypes[randomRatingType].type})
+        </p>
+        <img
+          id="anime-guess-number-condition"
+          src={condition.src}
+          alt={condition.alt}
+        />
+      </div>
     </AnimeGuess>
   );
 }

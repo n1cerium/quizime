@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 
-export function useRandomSeiyuu(url) {
+export function useRandomSeiyuu() {
   const [seiyuuVoice, setSeiyuuVoice] = useState({});
-  const [level, setLevel] = useState(1);
   const [seiyuuName, setSeiyuuName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getAnime() {
       setIsLoading(true);
-      const animeRes = await fetch(url);
+      const animeRes = await fetch("https://api.jikan.moe/v4/random/people");
       const animeData = await animeRes.json();
 
       setSeiyuuName(animeData.data.name);
@@ -29,7 +28,7 @@ export function useRandomSeiyuu(url) {
 
     console.log("infinite run");
     //} while (seiyuuVoice.length === 0 || seiyuuVoice.length <= 6);
-  }, [level, url, isLoading]);
+  }, [isLoading]);
 
-  return [seiyuuVoice, seiyuuName, level, setLevel, isLoading, setIsLoading];
+  return [seiyuuVoice, seiyuuName, isLoading, setIsLoading];
 }

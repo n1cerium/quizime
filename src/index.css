@@ -290,6 +290,17 @@ code {
 #anime-small-menus > button:hover {
   border: 4px solid #2e2c2f;
 }
+
+#anime-loader {
+  display: flex;
+  align-items: center;
+}
+#anime-loader > img {
+  height: 2em;
+}
+#anime-loader > span {
+  font-size: 0.5em;
+}
 @keyframes open {
   from {
     height: 0;

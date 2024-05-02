@@ -10,9 +10,8 @@ import ButtonIcon from "../ButtonIcon";
 import { useRef, useState, useEffect } from "react";
 import { useRandomTheme } from "../../custom-hooks/useRandomTheme";
 
-export default function GuessTheme() {
-  const [theme, animeName, level, setLevel, isLoading, setIsLoading] =
-    useRandomTheme();
+export default function GuessTheme({ isRandom, resetRandom }) {
+  const [theme, animeName, isLoading, setIsLoading] = useRandomTheme();
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(5);
   const [themes, setThemes] = useState([]);
@@ -30,27 +29,9 @@ export default function GuessTheme() {
       return;
     }
     if (!isLoading) {
-      console.log("theme: ");
-      console.log(Object.values(theme));
       setThemes(theme[0].animethemes);
-      console.log(theme[0].animethemes);
     }
   }, [isLoading, setIsLoading, theme]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      console.log(
-        themes[randomValForTheme]?.animethemeentries[0]?.videos[0]?.audio?.link
-      );
-      console.log("anime name: " + animeName);
-    }
-  }, [themes, isLoading, randomValForTheme]);
-  // useEffect(() => {
-  //   setStartTime(30);
-  //   setDuration((dur) => startTime + dur);
-  //   audioElement.current.currentTime = startTime;
-  //   console.log("am i run twice?");
-  // }, [startTime]);
 
   function handleStartAudio() {
     isPlaying ? audioElement.current.pause() : audioElement.current.play();
@@ -63,8 +44,6 @@ export default function GuessTheme() {
 
   function handleDuration() {
     const currTime = Math.floor(audioElement.current.currentTime);
-    console.log("currtime+duration=" + duration);
-    console.log("audio current time: " + currTime);
     if (currTime === duration) {
       audioElement.current.pause();
       setIsPlaying(false);
@@ -79,8 +58,13 @@ export default function GuessTheme() {
 
       return;
     }
+
+    if (isRandom) {
+      resetRandom(Math.floor(Math.random() * 6));
+      return;
+    }
+
     audioElement.current.currTime = 0;
-    setLevel((l) => l + 1);
     setIsLoading(true);
   }
   return (
@@ -88,34 +72,32 @@ export default function GuessTheme() {
       guessQuestion="Guess the Theme"
       specialInstructions={instructions}
       onCheckCorrectGuess={handleCheckGuessing}
-      level={level}
+      isDataLoading={isLoading}
     >
-      {!isLoading && (
-        <>
-          <div className="anime-guess-audio-button">
-            <ButtonIcon
-              icon={isPlaying ? faPause : faPlay}
-              onClick={handleStartAudio}
-            />
-            <ButtonIcon icon={faArrowRotateRight} onClick={handleReplay} />
-          </div>
+      <>
+        <div className="anime-guess-audio-button">
+          <ButtonIcon
+            icon={isPlaying ? faPause : faPlay}
+            onClick={handleStartAudio}
+          />
+          <ButtonIcon icon={faArrowRotateRight} onClick={handleReplay} />
+        </div>
 
-          <audio ref={audioElement} onTimeUpdate={handleDuration}>
-            <source
-              src={
-                themes[randomValForTheme]?.animethemeentries[0]?.videos[0]
-                  ?.audio?.link
-              }
-              type="audio/ogg"
-            ></source>
-          </audio>
-          <div id="anime-guess-theme-dancing">
-            <img src={AIDancing} alt="AI from Oshi no ko dancing" />
-            <img src={AIDancing} alt="AI from Oshi no ko dancing" />
-            <img src={AIDancing} alt="AI from Oshi no ko dancing" />
-          </div>
-        </>
-      )}
+        <audio ref={audioElement} onTimeUpdate={handleDuration}>
+          <source
+            src={
+              themes[randomValForTheme]?.animethemeentries[0]?.videos[0]?.audio
+                ?.link
+            }
+            type="audio/ogg"
+          ></source>
+        </audio>
+        <div id="anime-guess-theme-dancing">
+          <img src={AIDancing} alt="AI from Oshi no ko dancing" />
+          <img src={AIDancing} alt="AI from Oshi no ko dancing" />
+          <img src={AIDancing} alt="AI from Oshi no ko dancing" />
+        </div>
+      </>
     </AnimeGuess>
   );
 }

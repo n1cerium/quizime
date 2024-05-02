@@ -11,6 +11,7 @@ import GuessCharacter from "./menu_options/GuessCharacter";
 import GuessNumber from "./menu_options/GuessNumber";
 import GuessTheme from "./menu_options/GuessTheme";
 import GuessSeiyuu from "./menu_options/GuessSeiyuu";
+import GuessRandom from "./menu_options/GuessRandom";
 
 export default function Main() {
   const [menuOptions, setMenuOptions] = useState({
@@ -31,6 +32,7 @@ export default function Main() {
       isNumber: false,
       isTheme: false,
       isSeiyuu: false,
+      isDaily: false,
       isMenuOpen: false,
     });
 
@@ -57,36 +59,41 @@ export default function Main() {
     <>
       {menuOptions.isMenuOpen && (
         <div id="menu">
-          <MenuButton src={Taiga} name="Daily" alt="chibi taiga" />
+          <MenuButton
+            src={Taiga}
+            name="Daily"
+            alt="chibi taiga"
+            onClick={() => handleSmallMenuButtonClick(1)}
+          />
           <MenuButton
             src={Grimmjow}
             name="Title"
             alt="chibi grimmjow"
-            onClick={() => handleOpeningMenuOption({ isTitle: true })}
+            onClick={() => handleSmallMenuButtonClick(2)}
           />
           <MenuButton
             src={Kakashi}
             name="Character"
             alt="chibi kakashi"
-            onClick={() => handleOpeningMenuOption({ isCharacter: true })}
+            onClick={() => handleSmallMenuButtonClick(3)}
           />
           <MenuButton
             src={Megumin}
             name="Number"
             alt="chibbi megumin"
-            onClick={() => handleOpeningMenuOption({ isNumber: true })}
+            onClick={() => handleSmallMenuButtonClick(4)}
           />
           <MenuButton
             src={Bocchi}
             name="Theme"
             alt="chibi bocchi"
-            onClick={() => handleOpeningMenuOption({ isTheme: true })}
+            onClick={() => handleSmallMenuButtonClick(5)}
           />
           <MenuButton
             src={Natsu}
             name="Seiyuu"
             alt="chibi natsu"
-            onClick={() => handleOpeningMenuOption({ isSeiyuu: true })}
+            onClick={() => handleSmallMenuButtonClick(6)}
           />
         </div>
       )}
@@ -113,6 +120,7 @@ export default function Main() {
           <button>6</button> */}
         </div>
       )}
+      {menuOptions.isDaily && <GuessRandom />}
       {menuOptions.isTitle && <GuessTitle />}
       {menuOptions.isCharacter && <GuessCharacter />}
       {menuOptions.isNumber && <GuessNumber />}

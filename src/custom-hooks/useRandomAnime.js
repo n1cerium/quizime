@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 export function useRandomAnime(url) {
   const [anime, setAnime] = useState({});
-  const [level, setLevel] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   //const [url, setUrl] = useState("");
   //const [totalPages, totalCountPerPage] = usePageCount();
@@ -19,7 +18,7 @@ export function useRandomAnime(url) {
     if (isLoading) getAnime();
 
     //} while (anime.status === "Not yet aired");
-  }, [level, url, isLoading]);
+  }, [url, isLoading]);
 
-  return [anime, level, setLevel, isLoading, setIsLoading];
+  return [anime, isLoading, setIsLoading];
 }

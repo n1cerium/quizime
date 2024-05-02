@@ -1,10 +1,11 @@
 import AnimeGuess from "./AnimeGuess";
 import { useState, useEffect } from "react";
 import { useRandomAnime } from "../../custom-hooks/useRandomAnime";
+import Loader from "../Loader";
 
-export default function GuessCharacter() {
+export default function GuessCharacter({ isRandom, resetRandom }) {
   const [filter, setFilter] = useState(10);
-  const [character, level, setLevel, isLoading, setIsLoading] = useRandomAnime(
+  const [character, isLoading, setIsLoading] = useRandomAnime(
     "https://api.jikan.moe/v4/random/characters"
   );
   const instruction =
@@ -28,20 +29,18 @@ export default function GuessCharacter() {
     { filter: `blur(${filter}px)` },
   ];
 
-  useEffect(() => {}, [level]);
   useEffect(() => {
     setRandomCoordinates({
       x: `${Math.floor(Math.random() * 100) + 1}%`,
       y: `${Math.floor(Math.random() * 100) + 1}%`,
     });
     setRandomFilter(Math.floor(Math.random() * 2));
-  }, [level]);
+  }, [isLoading]);
   useEffect(() => {
     let imgTemp = character.images?.jpg?.image_url;
     if (imgTemp === undefined) return;
 
     let imagesSplit = imgTemp?.split("/");
-    console.log(imagesSplit);
     if (
       !isLoading &&
       imagesSplit[imagesSplit?.length - 1] === "apple-touch-icon-256.png"
@@ -55,8 +54,10 @@ export default function GuessCharacter() {
       setFilter((s) => (s - 0.3 > 1.0 ? s - 0.3 : 1));
       return;
     }
-
-    setLevel((l) => l + 1);
+    if (isRandom) {
+      resetRandom(Math.floor(Math.random() * 6));
+      return;
+    }
     setFilter(10);
     setIsLoading(true);
   }
@@ -65,7 +66,7 @@ export default function GuessCharacter() {
       guessQuestion="Guess the Character"
       onCheckCorrectGuess={handleCheckGuessing}
       specialInstructions={instruction}
-      level={level}
+      isDataLoading={isLoading}
     >
       <div id="anime-guess-character-zoom-effect">
         <img

@@ -15,7 +15,7 @@ import BocchiSad4 from "../../images/guess_title/bocchi_sad_4.png";
 import BocchiSad5 from "../../images/guess_title/bocchi_sad_5.png";
 import { useRandomAnime } from "../../custom-hooks/useRandomAnime";
 
-export default function GuessTitle() {
+export default function GuessTitle({ isRandom, resetRandom }) {
   const [hiddenTitle, setHiddenTitle] = useState("");
   const [animeTitle, setAnimeTitle] = useState("");
   //const animeTitle = "That Time I Got Reincarnated as a Slime Season 2";
@@ -39,11 +39,10 @@ export default function GuessTitle() {
     BocchiHappy5,
   ];
   const [numberOfGuess, setNumberOfGuess] = useState(6);
-  const [anime, level, setLevel, isLoading, setIsLoading] = useRandomAnime(
+  const [anime, isLoading, setIsLoading] = useRandomAnime(
     "https://api.jikan.moe/v4/random/anime"
   );
   // const [anime, setAnime] = useState({});
-  // const [level, setLevel] = useState(1);
   const test = {
     data: {
       mal_id: 22699,
@@ -598,18 +597,6 @@ export default function GuessTitle() {
     },
   ];
 
-  // useEffect(() => {
-  //   async function getAnime() {
-  //     const animeRes = await fetch("https://api.jikan.moe/v4/random/anime");
-  //     const animeData = await animeRes.json();
-
-  //     setAnime(animeData.data);
-  //   }
-
-  //   getAnime();
-  //   console.log("i am run twice??");
-  // }, [level]);
-
   useEffect(() => {
     setAnimeTitle(anime.title_english || anime.title);
 
@@ -621,17 +608,18 @@ export default function GuessTitle() {
             .join("")
         : ""
     );
-
-    console.log(animeTitle);
   }, [anime, animeTitle]);
 
   useEffect(() => {
     if (hiddenTitle !== "" && hiddenTitle === animeTitle) {
-      setLevel((l) => l + 1);
+      if (isRandom) {
+        resetRandom(Math.floor(Math.random() * 6));
+        return;
+      }
       setIsLoading(true);
       setNumberOfGuess(6);
     }
-  }, [hiddenTitle, animeTitle, setLevel, setIsLoading]);
+  }, [hiddenTitle, animeTitle, setIsLoading, isRandom, resetRandom]);
 
   useEffect(() => {
     if (numberOfGuess === 0) {
@@ -651,7 +639,6 @@ export default function GuessTitle() {
     const tempAnimInfo = testArr.filter(
       (animInfo) => animeInfo.mal_id === animInfo.mal_id
     );
-    console.log(tempAnimInfo);
   }
 
   function handleCheckGuessing(guess) {
@@ -661,7 +648,12 @@ export default function GuessTitle() {
       setNumberOfGuess((guesses) => guesses - 1);
       return "";
     }
-    setLevel((l) => l + 1);
+
+    if (isRandom) {
+      resetRandom(Math.floor(Math.random() * 6));
+      return;
+    }
+
     setIsLoading(true);
     setNumberOfGuess(6);
   }
@@ -695,7 +687,7 @@ export default function GuessTitle() {
       guessQuestion="Guess the Anime Title"
       specialInstructions={instructions}
       onCheckCorrectGuess={handleCheckGuessing}
-      level={level}
+      isDataLoading={isLoading}
     >
       <img
         id="anime-guess-title-lives"

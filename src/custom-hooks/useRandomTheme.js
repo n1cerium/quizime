@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 export function useRandomTheme() {
   const [theme, setTheme] = useState({});
-  const [level, setLevel] = useState(1);
   const [animeName, setAnimeName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -23,7 +22,7 @@ export function useRandomTheme() {
     }
 
     if (isLoading) getTheme();
-  }, [level, isLoading]);
+  }, [isLoading]);
 
-  return [theme, animeName, level, setLevel, isLoading, setIsLoading];
+  return [theme, animeName, isLoading, setIsLoading];
 }

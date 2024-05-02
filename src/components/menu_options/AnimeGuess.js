@@ -1,14 +1,16 @@
 import AnyaPointing from "../../images/button_images/anya-forger-pointing.png";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import ButtonIcon from "../ButtonIcon";
 import { useState } from "react";
 import { useMountedAnim } from "../../custom-hooks/useMountedAnim";
+import Loader from "../Loader";
 export default function AnimeGuess({
   guessQuestion,
   children,
   specialInstructions,
   onCheckCorrectGuess,
-  level,
+  isDataLoading,
 }) {
   const [isInstructionOpen, setIsInstructionOpen] = useState(false);
   const [guess, setGuess] = useState("");
@@ -54,8 +56,7 @@ export default function AnimeGuess({
             </div>
           )}
         </div>
-        <h6 id="anime-guess-level">Level: {level}</h6>
-        {children}
+        {isDataLoading ? <Loader /> : children}
       </div>
       <div id="anime-guess-input">
         <img src={AnyaPointing} alt="Anya Pointing" />

@@ -1,18 +1,10 @@
 import AnimeGuess from "./AnimeGuess";
-import BocchiHappy3 from "../../images/guess_title/bocchi_happy_3.png";
-import BocchiHappy4 from "../../images/guess_title/bocchi_happy_4.png";
-import BocchiHappy5 from "../../images/guess_title/bocchi_happy_5.png";
-import BocchiSad1 from "../../images/guess_title/bocchi_sad_1.png";
-import BocchiSad2 from "../../images/guess_title/bocchi_sad_2.png";
-import BocchiSad3 from "../../images/guess_title/bocchi_sad_3.png";
 import { useEffect, useState } from "react";
-import { useRandomAnime } from "../../custom-hooks/useRandomAnime";
 import { useRandomSeiyuu } from "../../custom-hooks/useRandomSeiyuu";
-import { type } from "@testing-library/user-event/dist/type";
+import Loader from "../Loader";
 
-export default function GuessSeiyuu() {
-  const [seiyuuVoices, seiyuuName, level, setLevel, isLoading, setIsLoading] =
-    useRandomSeiyuu("https://api.jikan.moe/v4/random/people");
+export default function GuessSeiyuu({ isRandom, resetRandom }) {
+  const [seiyuuVoices, seiyuuName, isLoading, setIsLoading] = useRandomSeiyuu();
 
   const [seiyuu, setSeiyuu] = useState([]);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
@@ -30,19 +22,12 @@ export default function GuessSeiyuu() {
     }
   }, [isLoading, seiyuuVoices, setIsLoading]);
   useEffect(() => {
-    console.log("seiyuu name: " + seiyuuName);
-    console.log(seiyuuVoices);
-    console.log("Un-filtered");
-    console.log(Object.values(seiyuuVoices));
     let tempSeiyuu = Object.values(seiyuuVoices);
     tempSeiyuu = tempSeiyuu.filter((seiyuu) => {
       let tempImageArr = seiyuu.character.images.jpg.image_url.split("/");
       return tempImageArr[tempImageArr.length - 1] !== "questionmark_23.gif";
     });
     //let tempSeiyuus = seiyuusArray.slice(0, 5);
-    console.log("----------------");
-    console.log("Filtered");
-    console.log(tempSeiyuu);
     tempSeiyuu = tempSeiyuu.reduce((acc, current) => {
       let tempNoDupsArray = acc.slice();
       let characterName = current.character.name;
@@ -56,10 +41,6 @@ export default function GuessSeiyuu() {
       return tempNoDupsArray;
     }, []);
 
-    console.log("----------------");
-    console.log("No Duplicatges");
-    console.log(tempSeiyuu);
-
     if (tempSeiyuu.length <= 6) {
       setIsLoading(true);
       return;
@@ -68,9 +49,6 @@ export default function GuessSeiyuu() {
     setSeiyuu(tempSeiyuu.slice(0, 6));
   }, [seiyuuVoices, setIsLoading, seiyuuName]);
   function handleCheckGuessing(guess) {
-    console.log(seiyuuName);
-    console.log(seiyuu);
-
     if (
       guess.toLowerCase() !== seiyuuName?.toLowerCase() &&
       numberOfCharacters <= 6
@@ -78,8 +56,11 @@ export default function GuessSeiyuu() {
       setNumberOfCharacters((no) => no + 1);
       return;
     }
+    if (isRandom) {
+      resetRandom(Math.floor(Math.random() * 6));
+      return;
+    }
 
-    setLevel((l) => l + 1);
     setIsLoading(true);
   }
 
@@ -88,23 +69,21 @@ export default function GuessSeiyuu() {
       guessQuestion="Guess the Seiyuu"
       specialInstructions={instructions}
       onCheckCorrectGuess={handleCheckGuessing}
-      level={level}
+      isDataLoading={isLoading}
     >
-      {seiyuuVoices && (
-        <ul id="anime-guess-seiyuu-voices">
-          {seiyuu.map(
-            (char, index) =>
-              index <= numberOfCharacters && (
-                <li key={index}>
-                  <img
-                    src={char?.character?.images?.jpg?.image_url}
-                    alt={char?.character?.name}
-                  />
-                </li>
-              )
-          )}
-        </ul>
-      )}
+      <ul id="anime-guess-seiyuu-voices">
+        {seiyuu.map(
+          (char, index) =>
+            index <= numberOfCharacters && (
+              <li key={index}>
+                <img
+                  src={char?.character?.images?.jpg?.image_url}
+                  alt={char?.character?.name}
+                />
+              </li>
+            )
+        )}
+      </ul>
     </AnimeGuess>
   );
 }
