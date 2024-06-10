@@ -42,7 +42,10 @@ export default function GuessTitle({ isRandom, resetRandom }) {
   const [anime, isLoading, setIsLoading] = useRandomAnime(
     "https://api.jikan.moe/v4/random/anime"
   );
+<<<<<<< Updated upstream
   // const [anime, setAnime] = useState({});
+=======
+>>>>>>> Stashed changes
   const test = {
     data: {
       mal_id: 22699,
@@ -659,13 +662,13 @@ export default function GuessTitle({ isRandom, resetRandom }) {
   }
 
   function handleGetKeys(key) {
-    if (!animeTitle.toLowerCase().includes(key)) {
+    if (!animeTitle?.toLowerCase().includes(key)) {
       setNumberOfGuess((guesses) => (guesses > 0 ? guesses - 1 : guesses));
     }
 
     if (
-      animeTitle.toLowerCase().includes(key) &&
-      !hiddenTitle.toLowerCase().includes(key)
+      animeTitle?.toLowerCase().includes(key) &&
+      !hiddenTitle?.toLowerCase().includes(key)
     ) {
       setNumberOfGuess((guesses) =>
         guesses < imagesLives.length ? guesses + 1 : guesses

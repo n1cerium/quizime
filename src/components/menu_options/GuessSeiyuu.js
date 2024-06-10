@@ -1,7 +1,10 @@
 import AnimeGuess from "./AnimeGuess";
 import { useEffect, useState } from "react";
 import { useRandomSeiyuu } from "../../custom-hooks/useRandomSeiyuu";
+<<<<<<< Updated upstream
 import Loader from "../Loader";
+=======
+>>>>>>> Stashed changes
 
 export default function GuessSeiyuu({ isRandom, resetRandom }) {
   const [seiyuuVoices, seiyuuName, isLoading, setIsLoading] = useRandomSeiyuu();
